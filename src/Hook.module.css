@@ -5,3 +5,6 @@
 .details {
     padding: 0 0 0 20px;
 }
+.selected {
+    background-color: green;
+}
