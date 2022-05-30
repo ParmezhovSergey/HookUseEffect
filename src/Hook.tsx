@@ -9,9 +9,16 @@ type SearchUserType = {
 type SearchResault = {
   items: SearchUserType[];
 };
+type UserType = {
+  login: string;
+  id: number;
+  avatar_url: string;
+  followers: number;
+};
 
 export const Search = () => {
   const [selectedUser, setSelectedUser] = useState<SearchUserType | null>(null);
+  const [userDetails, setUserDetails] = useState<null | UserType>(null);
   const [users, setUsers] = useState<SearchUserType[]>([]);
   const [tempSearch, setTempSearch] = useState("it-kamasutra");
   const [searchTerm, setSearchTerm] = useState("it-kamasutra");
@@ -29,6 +36,16 @@ export const Search = () => {
         setUsers(res.data.items);
       });
   }, [searchTerm]);
+
+  useEffect(() => {
+    if (!!selectedUser) {
+      axios
+        .get<UserType>(`https://api.github.com/users/${selectedUser.login}`)
+        .then((res) => {
+          setUserDetails(res.data);
+        });
+    }
+  }, [selectedUser]);
 
   return (
     <div className={style.container}>
@@ -65,7 +82,13 @@ export const Search = () => {
       </div>
       <div className={style.details}>
         <h2 className={style.username}>UserName</h2>
-        <div>Details</div>
+        {userDetails && (
+          <div>
+            <img alt="" src={userDetails.avatar_url} />
+            <br />
+            {userDetails.login}, followers: {userDetails.followers}
+          </div>
+        )}
       </div>
     </div>
   );
