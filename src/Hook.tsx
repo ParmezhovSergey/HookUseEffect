@@ -16,11 +16,46 @@ type UserType = {
   followers: number;
 };
 
+type SearchPropsType = {
+  value: string;
+  onSubmit: (fixedValue: string) => void;
+};
+
+export const SearchString = (props: SearchPropsType) => {
+
+  const [tempSearch, setTempSearch] = useState("");
+
+  useEffect(() => {
+    setTempSearch(props.value);
+  }, [props.value]);
+
+  return (
+    <div>
+      <input
+        placeholder="search"
+        value={tempSearch}
+        onChange={(e) => {
+          setTempSearch(e.currentTarget.value);
+        }}
+      />
+      <button
+        onClick={() => {
+          props.onSubmit(tempSearch);
+        }}
+      >
+        find
+      </button>
+    </div>
+  );
+};
+
+
+
 export const Search = () => {
   const [selectedUser, setSelectedUser] = useState<SearchUserType | null>(null);
   const [userDetails, setUserDetails] = useState<null | UserType>(null);
   const [users, setUsers] = useState<SearchUserType[]>([]);
-  const [tempSearch, setTempSearch] = useState("it-kamasutra");
+  // const [tempSearch, setTempSearch] = useState("it-kamasutra");
   const [searchTerm, setSearchTerm] = useState("it-kamasutra");
 
   useEffect(() => {
@@ -50,7 +85,20 @@ export const Search = () => {
   return (
     <div className={style.container}>
       <div>
-        <div>
+        <SearchString
+          value={searchTerm}
+          onSubmit={(value: string) => {
+            setSearchTerm(value);
+          }}
+        />
+        <button className={style.button}
+          onClick={() => {
+            setSearchTerm("it-kamasutra");
+          }}
+        >
+          reset
+        </button>
+        {/* <div>
           <input
             placeholder="search"
             value={tempSearch}
@@ -65,7 +113,7 @@ export const Search = () => {
           >
             find
           </button>
-        </div>
+        </div> */}
         <ul>
           {users.map((u) => (
             <li
