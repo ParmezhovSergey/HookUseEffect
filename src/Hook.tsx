@@ -82,25 +82,70 @@ export const UserList = (props: UserListPropsTtpe) => {
   );
 };
 
+type TimerProps = {
+  seconds: number;
+  onChange: (actualSeconds: number) => void;
+  timerKey: string;
+};
+
+export const Timer = (props: TimerProps) => {
+  const [seconds, setSeconds] = useState(props.seconds);
+
+  useEffect(() => {
+    setSeconds(props.seconds);
+  }, [props.seconds]);
+
+  useEffect(() => {
+    props.onChange(seconds);
+  }, [seconds]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setSeconds((prev) => prev - 1);
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [props.timerKey]);
+
+  return <div>{seconds}</div>;
+};
+
 type UserDetailsPropsType = {
   user: SearchUserType | null;
 };
 export const UserDetails = (props: UserDetailsPropsType) => {
   const [userDetails, setUserDetails] = useState<null | UserType>(null);
+  const [seconds, setSeconds] = useState(10);
   useEffect(() => {
     if (!!props.user) {
       axios
         .get<UserType>(`https://api.github.com/users/${props.user.login}`)
         .then((res) => {
+          setSeconds(10);
           setUserDetails(res.data);
         });
     }
   }, [props.user]);
 
+  useEffect(() => {
+    if (seconds < 1) {
+      setUserDetails(null);
+    }
+  }, [seconds]);
+
   return (
     <div className={style.details}>
       {userDetails && (
         <div>
+          <Timer
+            seconds={seconds}
+            onChange={(actualSeconds) => {
+              setSeconds(actualSeconds);
+            }}
+            timerKey={userDetails.id.toString()}
+          />
           <h2 className={style.username}>{userDetails.login}</h2>
           <img alt="" src={userDetails.avatar_url} />
           <br />

@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/HookUseEffect/static/css/main.aab3c1bf.css",
-    "main.js": "/HookUseEffect/static/js/main.6e930439.js",
+    "main.css": "/HookUseEffect/static/css/main.11074e22.css",
+    "main.js": "/HookUseEffect/static/js/main.06f189d7.js",
     "static/js/787.28cb0dcd.chunk.js": "/HookUseEffect/static/js/787.28cb0dcd.chunk.js",
     "index.html": "/HookUseEffect/index.html",
-    "main.aab3c1bf.css.map": "/HookUseEffect/static/css/main.aab3c1bf.css.map",
-    "main.6e930439.js.map": "/HookUseEffect/static/js/main.6e930439.js.map",
+    "main.11074e22.css.map": "/HookUseEffect/static/css/main.11074e22.css.map",
+    "main.06f189d7.js.map": "/HookUseEffect/static/js/main.06f189d7.js.map",
     "787.28cb0dcd.chunk.js.map": "/HookUseEffect/static/js/787.28cb0dcd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.aab3c1bf.css",
-    "static/js/main.6e930439.js"
+    "static/css/main.11074e22.css",
+    "static/js/main.06f189d7.js"
   ]
 }
